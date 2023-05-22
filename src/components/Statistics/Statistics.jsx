@@ -1,4 +1,4 @@
-import { createColor } from '../utils/createColor';
+import { createColor } from '../../utils/createColor';
 import PropTypes from 'prop-types';
 import {
   Section,
@@ -9,16 +9,16 @@ import {
   Procentage,
 } from './Statistics.styled';
 
-export const Statistics = ({ stats }) => {
+export const Statistics = ({ stats, title }) => {
   return (
     <Section>
-      <Title>Upload stats</Title>
+      {title.length > 0 && <Title>{title}</Title>}
 
       <List>
-        {stats.map(el => (
-          <Item key={el.id} style={{ backgroundColor: createColor() }}>
-            <Label>{el.label} </Label>
-            <Procentage>{el.percentage}%</Procentage>
+        {stats.map(({ id, label, percentage }) => (
+          <Item key={id} style={{ backgroundColor: createColor() }}>
+            <Label>{label} </Label>
+            <Procentage>{percentage}%</Procentage>
           </Item>
         ))}
       </List>
@@ -27,17 +27,8 @@ export const Statistics = ({ stats }) => {
 };
 
 Statistics.propTypes = {
-  events: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      percentage: PropTypes.number.isRequired,
-    })
-  ),
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  percentage: PropTypes.number.isRequired,
 };
-
-//  {
-//    unreadMessages.length > 0 && (
-//      <h2>У вас {unreadMessages.length} непрочитанных сообщений.</h2>
-//    );
-//  }
